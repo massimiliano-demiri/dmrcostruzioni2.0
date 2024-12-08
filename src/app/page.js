@@ -131,7 +131,7 @@ export default function Home() {
                   height={80}
                   className="rounded-full mx-auto mb-4"
                 />
-                <p className="italic text-sm text-[#3B383F]">"{review.text}"</p>
+                <p className="italic text-sm text-[#3B383F]">{review.text}</p>
                 <p className="text-sm font-bold text-[#96CA36] mt-4">
                   - {review.name}
                 </p>
@@ -208,7 +208,7 @@ export default function Home() {
           />
           <h3 className="text-xl font-bold mb-2">Sostenibilità</h3>
           <p className="text-sm text-[#3B383F]">
-            Costruzioni responsabili, rispettose dell'ambiente e del futuro.
+            Costruzioni responsabili, rispettose dell ambiente e del futuro.
           </p>
         </div>
       </section>

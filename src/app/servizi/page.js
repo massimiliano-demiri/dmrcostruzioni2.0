@@ -154,7 +154,7 @@ export default function Servizi() {
                 className="rounded-full mx-auto mb-4"
               />
               <p className="text-sm italic text-[#3B383F]">
-                "{testimonial.feedback}"
+                {testimonial.feedback}
               </p>
               <h4 className="text-lg font-bold text-[#96CA36] mt-4 text-center">
                 - {testimonial.name}
