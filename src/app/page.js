@@ -15,6 +15,7 @@ import cert3 from "../../public/immagini/3.png";
 import cert4 from "../../public/immagini/4.png";
 import cert5 from "../../public/immagini/5.png";
 import heroBg from "../../public/immagini/s3.jpg"; // Sostituisci con il percorso corretto
+import Head from "next/head";
 
 export default function Home() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -90,159 +91,183 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col relative">
-      <Navbar />
+    <>
+      <Head>
+        <title>DMR Costruzioni - Impresa Edile a Terni</title>
+        <meta
+          name="description"
+          content="DMR Costruzioni è un'impresa edile leader a Terni, specializzata in ristrutturazioni, nuove costruzioni e opere personalizzate. Affidati alla nostra esperienza per trasformare il tuo progetto in realtà."
+        />
+        <meta
+          property="og:title"
+          content="DMR Costruzioni - Impresa Edile a Terni"
+        />
+        <meta
+          property="og:description"
+          content="Scopri i servizi offerti da DMR Costruzioni, l'impresa edile di riferimento a Terni. Realizziamo progetti su misura con qualità e professionalità."
+        />
+      </Head>
 
-      {/* Hero Section */}
-      <header
-        className="relative bg-cover bg-center text-white min-h-[90vh] flex items-center justify-center"
-        style={{ backgroundImage: `url(${heroBg.src})` }}
-      >
-        <div className="absolute inset-0 bg-black/70"></div>
-        <div className="relative z-10 text-center px-8 max-w-4xl">
-          <h1 className="text-6xl sm:text-8xl font-extrabold leading-tight mb-6">
-            DMR Costruzioni
-          </h1>
-          <p className="text-2xl sm:text-3xl mb-8 leading-relaxed">
-            Costruire è un arte. Con noi, il tuo progetto diventa realtà.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="/servizi"
-              className="bg-[#96CA36] px-8 py-4 text-black font-semibold rounded-full hover:bg-green-700 transition"
-            >
-              Scopri i nostri servizi
-            </a>
-            <a
-              href="#contact-form"
-              className="border-2 border-[#96CA36] px-8 py-4 text-[#96CA36] font-semibold rounded-full hover:bg-[#96CA36] hover:text-black transition"
-            >
-              Richiedi un preventivo
-            </a>
-          </div>
-        </div>
-      </header>
+      <div className="min-h-screen flex flex-col relative">
+        <Navbar />
 
-      {/* Statistiche Section */}
-      <section className="py-20 px-8 bg-[#F5F5F5]">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-extrabold text-[#3B383F] mb-6">
-            Perché scegliere DMR Costruzioni?
-          </h2>
-          <p className="text-lg text-gray-600 mb-12">
-            Con decenni di esperienza, ci impegniamo a fornire soluzioni edili
-            innovative e sostenibili per ogni esigenza.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
-            <div className="flex flex-col items-center">
-              <h3 className="text-6xl font-bold text-[#96CA36]">20+</h3>
-              <p className="text-lg text-[#3B383F] mt-2">Anni di esperienza</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <h3 className="text-6xl font-bold text-[#96CA36]">300</h3>
-              <p className="text-lg text-[#3B383F] mt-2">Progetti completati</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <h3 className="text-6xl font-bold text-[#96CA36]">100%</h3>
-              <p className="text-lg text-[#3B383F] mt-2">Clienti soddisfatti</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Certifications Section */}
-      <section className="py-20 bg-[#F5F5F5]">
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-extrabold text-[#3B383F] mb-6">
-            Le nostre certificazioni
-          </h2>
-          <Slider {...sliderSettings}>
-            {certifications.map((cert, index) => (
-              <div key={index} className="p-4">
-                <Image
-                  src={cert}
-                  alt={`Certificazione ${index + 1}`}
-                  width={300}
-                  height={200}
-                  className="rounded-lg mx-auto shadow-md"
-                />
-              </div>
-            ))}
-          </Slider>
-        </div>
-      </section>
-
-      {/* Contact Form Section */}
-      <section id="contact-form" className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto bg-gray-50 shadow-lg rounded-lg p-12">
-          <h2
-            id="form-title"
-            className="text-4xl font-extrabold text-[#3B383F] mb-6 text-center animate-bounce"
-          >
-            Contattaci ora per un preventivo gratuito
-          </h2>
-          {!formSubmitted ? (
-            <form onSubmit={handleSubmit} className="grid gap-6">
-              <input
-                type="text"
-                name="name"
-                placeholder="Nome completo"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
-                required
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Numero di telefono"
-                value={formData.phone}
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
-                className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
-                required
-              />
-              <textarea
-                name="message"
-                placeholder="Descrivi il tuo progetto (es. tipo di lavoro, tempi)"
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-                className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
-                rows={4}
-                required
-              />
-              <button
-                type="submit"
-                className="bg-[#96CA36] text-white px-6 py-3 rounded-full text-lg hover:bg-green-700 transition"
-              >
-                Invia la tua richiesta
-              </button>
-            </form>
-          ) : (
-            <p className="text-center text-lg text-green-600">
-              Grazie! Ti contatteremo presto per discutere il tuo progetto.
+        {/* Hero Section */}
+        <header
+          className="relative bg-cover bg-center text-white min-h-[90vh] flex items-center justify-center"
+          style={{ backgroundImage: `url(${heroBg.src})` }}
+        >
+          <div className="absolute inset-0 bg-black/70"></div>
+          <div className="relative z-10 text-center px-8 max-w-4xl">
+            <h1 className="text-6xl sm:text-8xl font-extrabold leading-tight mb-6">
+              DMR Costruzioni
+            </h1>
+            <p className="text-2xl sm:text-3xl mb-8 leading-relaxed">
+              Costruire è un arte. Con noi, il tuo progetto diventa realtà.
             </p>
-          )}
-        </div>
-      </section>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a
+                href="/servizi"
+                className="bg-[#96CA36] px-8 py-4 text-black font-semibold rounded-full hover:bg-green-700 transition"
+              >
+                Scopri i nostri servizi
+              </a>
+              <a
+                href="#contact-form"
+                className="border-2 border-[#96CA36] px-8 py-4 text-[#96CA36] font-semibold rounded-full hover:bg-[#96CA36] hover:text-black transition"
+              >
+                Richiedi un preventivo
+              </a>
+            </div>
+          </div>
+        </header>
 
-      <Footer />
-    </div>
+        {/* Statistiche Section */}
+        <section className="py-20 px-8 bg-[#F5F5F5]">
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="text-4xl font-extrabold text-[#3B383F] mb-6">
+              Perché scegliere DMR Costruzioni?
+            </h2>
+            <p className="text-lg text-gray-600 mb-12">
+              Con decenni di esperienza, ci impegniamo a fornire soluzioni edili
+              innovative e sostenibili per ogni esigenza.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
+              <div className="flex flex-col items-center">
+                <h3 className="text-6xl font-bold text-[#96CA36]">20+</h3>
+                <p className="text-lg text-[#3B383F] mt-2">
+                  Anni di esperienza
+                </p>
+              </div>
+              <div className="flex flex-col items-center">
+                <h3 className="text-6xl font-bold text-[#96CA36]">300</h3>
+                <p className="text-lg text-[#3B383F] mt-2">
+                  Progetti completati
+                </p>
+              </div>
+              <div className="flex flex-col items-center">
+                <h3 className="text-6xl font-bold text-[#96CA36]">100%</h3>
+                <p className="text-lg text-[#3B383F] mt-2">
+                  Clienti soddisfatti
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Certifications Section */}
+        <section className="py-20 bg-[#F5F5F5]">
+          <div className="max-w-6xl mx-auto text-center">
+            <h2 className="text-4xl font-extrabold text-[#3B383F] mb-6">
+              Le nostre certificazioni
+            </h2>
+            <Slider {...sliderSettings}>
+              {certifications.map((cert, index) => (
+                <div key={index} className="p-4">
+                  <Image
+                    src={cert}
+                    alt={`Certificazione ${index + 1}`}
+                    width={300}
+                    height={200}
+                    className="rounded-lg mx-auto shadow-md"
+                  />
+                </div>
+              ))}
+            </Slider>
+          </div>
+        </section>
+
+        {/* Contact Form Section */}
+        <section id="contact-form" className="py-20 bg-white">
+          <div className="max-w-4xl mx-auto bg-gray-50 shadow-lg rounded-lg p-12">
+            <h2
+              id="form-title"
+              className="text-4xl font-extrabold text-[#3B383F] mb-6 text-center animate-bounce"
+            >
+              Contattaci ora per un preventivo gratuito
+            </h2>
+            {!formSubmitted ? (
+              <form onSubmit={handleSubmit} className="grid gap-6">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Nome completo"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
+                  required
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Numero di telefono"
+                  value={formData.phone}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                  className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
+                  required
+                />
+                <textarea
+                  name="message"
+                  placeholder="Descrivi il tuo progetto (es. tipo di lavoro, tempi)"
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
+                  className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
+                  rows={4}
+                  required
+                />
+                <button
+                  type="submit"
+                  className="bg-[#96CA36] text-white px-6 py-3 rounded-full text-lg hover:bg-green-700 transition"
+                >
+                  Invia la tua richiesta
+                </button>
+              </form>
+            ) : (
+              <p className="text-center text-lg text-green-600">
+                Grazie! Ti contatteremo presto per discutere il tuo progetto.
+              </p>
+            )}
+          </div>
+        </section>
+
+        <Footer />
+      </div>
+    </>
   );
 }
