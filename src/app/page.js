@@ -104,7 +104,7 @@ export default function Home() {
             DMR Costruzioni
           </h1>
           <p className="text-2xl sm:text-3xl mb-8 leading-relaxed">
-            Costruire è un'arte. Con noi, il tuo progetto diventa realtà.
+            Costruire è un arte. Con noi, il tuo progetto diventa realtà.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
