@@ -13,8 +13,8 @@ export default function Footer() {
           <p className="text-sm mt-2">
             Via del Sersimone 3/F, Terni (TR), Italia
           </p>
-          <p className="text-sm">Email: dmrcostruzioni@legalmail.it</p>
-          <p className="text-sm">Telefono: +39 0744 123456</p>
+          <p className="text-sm">Email: demiri@dmrcostruzioni.it</p>
+          <p className="text-sm">Telefono: +39 3398438160</p>
           <p className="text-sm">Partita IVA: 01539760551</p>
           <p className="text-sm">Codice Fiscale: 01539760551</p>
         </div>
