@@ -1,273 +1,178 @@
-"use client";
-import Navbar from "../app/navbar";
 import Image from "next/image";
-import Footer from "../app/footer";
-import { useState, useEffect } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import review1 from "../../public/immagini/s1.jpg";
-import review2 from "../../public/immagini/s1.jpg";
-import review3 from "../../public/immagini/s1.jpg";
-import cert1 from "../../public/immagini/1.png";
-import cert2 from "../../public/immagini/2.png";
-import cert3 from "../../public/immagini/3.png";
-import cert4 from "../../public/immagini/4.png";
-import cert5 from "../../public/immagini/5.png";
-import heroBg from "../../public/immagini/s3.jpg"; // Sostituisci con il percorso corretto
-import Head from "next/head";
+import Link from "next/link";
+import CtaButton from "@/components/CtaButton";
+import SectionHeading from "@/components/SectionHeading";
+import ServiceIcon from "@/components/ServiceIcon";
+import CertificationsSlider from "@/components/CertificationsSlider";
+import ContactForm from "@/components/ContactForm";
+import { services, stats, testimonials } from "@/lib/site-data";
+
+export const metadata = {
+  title: "DMR Costruzioni - Impresa Edile a Terni",
+  description:
+    "Impresa edile a Terni specializzata in costruzioni, ristrutturazioni, rifacimento tetti, cartongesso, pavimenti, impermeabilizzazioni e impiantistica.",
+  alternates: { canonical: "/" },
+};
+
+const featuredProjects = [
+  { src: "/immagini/operemurarie/1.jpg", alt: "Opera muraria realizzata da DMR Costruzioni" },
+  { src: "/immagini/rifacimentotetti/1.jpg", alt: "Rifacimento tetto realizzato da DMR Costruzioni" },
+  { src: "/immagini/pavimentoerivestimenti/1.jpg", alt: "Pavimento posato da DMR Costruzioni" },
+  { src: "/immagini/operecartongesso/1.jpg", alt: "Opera in cartongesso realizzata da DMR Costruzioni" },
+  { src: "/immagini/impermeabilizzazione/1.jpg", alt: "Impermeabilizzazione realizzata da DMR Costruzioni" },
+  { src: "/immagini/operemurarie/5.jpg", alt: "Cantiere DMR Costruzioni" },
+];
 
 export default function Home() {
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-
-  useEffect(() => {
-    const title = document.querySelector("#form-title");
-    let animationInterval = setInterval(() => {
-      title.classList.toggle("animate-bounce");
-    }, 2000);
-
-    return () => clearInterval(animationInterval);
-  }, []);
-
-  const reviews = [
-    {
-      name: "Giovanni Rossi",
-      text: "DMR Costruzioni ha superato ogni mia aspettativa. Professionalità e qualità al top!",
-      image: review1,
-    },
-    {
-      name: "Maria Bianchi",
-      text: "Grazie a loro, la mia casa è diventata un sogno. Consigliatissimi!",
-      image: review2,
-    },
-    {
-      name: "Luca Verdi",
-      text: "Servizio impeccabile, sempre pronti ad ascoltare e realizzare ciò che desideravo.",
-      image: review3,
-    },
-  ];
-
-  const certifications = [cert1, cert2, cert3, cert4, cert5];
-
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    autoplay: true,
-    autoplaySpeed: 3000,
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        setFormSubmitted(true);
-        alert("Richiesta inviata con successo!");
-      } else {
-        const errorData = await response.json();
-        alert(`Errore: ${errorData.error || "Si è verificato un problema."}`);
-      }
-    } catch (error) {
-      console.error("Errore durante l'invio:", error);
-      alert("Errore di rete. Riprova più tardi.");
-    }
-  };
-
   return (
     <>
-      <Head>
-        <title>DMR Costruzioni - Impresa Edile a Terni</title>
-        <meta
-          name="description"
-          content="DMR Costruzioni è un'impresa edile leader a Terni, specializzata in ristrutturazioni, nuove costruzioni e opere personalizzate. Affidati alla nostra esperienza per trasformare il tuo progetto in realtà."
-        />
-        <meta
-          property="og:title"
-          content="DMR Costruzioni - Impresa Edile a Terni"
-        />
-        <meta
-          property="og:description"
-          content="Scopri i servizi offerti da DMR Costruzioni, l'impresa edile di riferimento a Terni. Realizziamo progetti su misura con qualità e professionalità."
-        />
-      </Head>
+      {/* Hero */}
+      <header className="relative bg-[url('/immagini/s3.jpg')] bg-cover bg-center text-white min-h-[90vh] flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="relative z-10 text-center px-6 max-w-4xl animate-fade-in-up">
+          <span className="inline-block bg-brand-500 text-ink-700 text-sm font-bold px-4 py-1.5 rounded-full mb-6 uppercase tracking-wide">
+            Impresa edile a Terni
+          </span>
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
+            Costruire è un&apos;arte.
+            <br /> Con noi diventa realtà.
+          </h1>
+          <p className="text-lg sm:text-2xl mb-8 leading-relaxed text-white/90">
+            Costruzioni, ristrutturazioni e opere edili chiavi in mano a Terni
+            e provincia, dal preventivo alla consegna.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <CtaButton href="/servizi">Scopri i nostri servizi</CtaButton>
+            <CtaButton href="/contact" variant="outline-light">
+              Richiedi un preventivo
+            </CtaButton>
+          </div>
+        </div>
+      </header>
 
-      <div className="min-h-screen flex flex-col relative">
-        <Navbar />
+      {/* Stats */}
+      <section className="py-16 px-6 bg-white border-b border-gray-100">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-10 text-center">
+          {stats.map((stat) => (
+            <div key={stat.label} className="flex flex-col items-center">
+              <span className="text-5xl sm:text-6xl font-extrabold text-brand-600">
+                {stat.value}
+              </span>
+              <span className="text-lg text-ink-500 mt-2">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        {/* Hero Section */}
-        <header
-          className="relative bg-cover bg-center text-white min-h-[90vh] flex items-center justify-center"
-          style={{ backgroundImage: `url(${heroBg.src})` }}
-        >
-          <div className="absolute inset-0 bg-black/70"></div>
-          <div className="relative z-10 text-center px-8 max-w-4xl">
-            <h1 className="text-6xl sm:text-8xl font-extrabold leading-tight mb-6">
-              DMR Costruzioni
-            </h1>
-            <p className="text-2xl sm:text-3xl mb-8 leading-relaxed">
-              Costruire è un arte. Con noi, il tuo progetto diventa realtà.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a
+      {/* Servizi overview */}
+      <section className="py-20 px-6 bg-[#F5F5F5]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading
+            eyebrow="Cosa facciamo"
+            title="I nostri servizi"
+            subtitle="Un'unica impresa per ogni fase del cantiere: dalle opere murarie alle finiture, con squadre specializzate per ogni lavorazione."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service) => (
+              <Link
+                key={service.slug}
                 href="/servizi"
-                className="bg-[#96CA36] px-8 py-4 text-black font-semibold rounded-full hover:bg-green-700 transition"
+                className="group bg-white rounded-xl shadow-md hover:shadow-card transition-shadow overflow-hidden flex flex-col"
               >
-                Scopri i nostri servizi
-              </a>
-              <a
-                href="#contact-form"
-                className="border-2 border-[#96CA36] px-8 py-4 text-[#96CA36] font-semibold rounded-full hover:bg-[#96CA36] hover:text-black transition"
-              >
-                Richiedi un preventivo
-              </a>
-            </div>
-          </div>
-        </header>
-
-        {/* Statistiche Section */}
-        <section className="py-20 px-8 bg-[#F5F5F5]">
-          <div className="max-w-6xl mx-auto text-center">
-            <h2 className="text-4xl font-extrabold text-[#3B383F] mb-6">
-              Perché scegliere DMR Costruzioni?
-            </h2>
-            <p className="text-lg text-gray-600 mb-12">
-              Con decenni di esperienza, ci impegniamo a fornire soluzioni edili
-              innovative e sostenibili per ogni esigenza.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
-              <div className="flex flex-col items-center">
-                <h3 className="text-6xl font-bold text-[#96CA36]">20+</h3>
-                <p className="text-lg text-[#3B383F] mt-2">
-                  Anni di esperienza
-                </p>
-              </div>
-              <div className="flex flex-col items-center">
-                <h3 className="text-6xl font-bold text-[#96CA36]">300</h3>
-                <p className="text-lg text-[#3B383F] mt-2">
-                  Progetti completati
-                </p>
-              </div>
-              <div className="flex flex-col items-center">
-                <h3 className="text-6xl font-bold text-[#96CA36]">100%</h3>
-                <p className="text-lg text-[#3B383F] mt-2">
-                  Clienti soddisfatti
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Certifications Section */}
-        <section className="py-20 bg-[#F5F5F5]">
-          <div className="max-w-6xl mx-auto text-center">
-            <h2 className="text-4xl font-extrabold text-[#3B383F] mb-6">
-              Le nostre certificazioni
-            </h2>
-            <Slider {...sliderSettings}>
-              {certifications.map((cert, index) => (
-                <div key={index} className="p-4">
+                <div className="relative h-48">
                   <Image
-                    src={cert}
-                    alt={`Certificazione ${index + 1}`}
-                    width={300}
-                    height={200}
-                    className="rounded-lg mx-auto shadow-md"
+                    src={`/immagini/${service.folder}/1.jpg`}
+                    alt={service.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-              ))}
-            </Slider>
+                <div className="p-6 flex flex-col flex-1">
+                  <div className="w-12 h-12 rounded-full bg-brand-500/10 text-brand-600 flex items-center justify-center mb-4">
+                    <ServiceIcon slug={service.slug} />
+                  </div>
+                  <h3 className="text-xl font-bold text-ink-600 mb-2">{service.title}</h3>
+                  <p className="text-sm text-ink-400 flex-1">{service.short}</p>
+                  <span className="mt-4 text-brand-600 font-semibold text-sm">
+                    Scopri di più &rarr;
+                  </span>
+                </div>
+              </Link>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Contact Form Section */}
-        <section id="contact-form" className="py-20 bg-white">
-          <div className="max-w-4xl mx-auto bg-gray-50 shadow-lg rounded-lg p-12">
-            <h2
-              id="form-title"
-              className="text-4xl font-extrabold text-[#3B383F] mb-6 text-center animate-bounce"
-            >
-              Contattaci ora per un preventivo gratuito
-            </h2>
-            {!formSubmitted ? (
-              <form onSubmit={handleSubmit} className="grid gap-6">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Nome completo"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
-                  required
+      {/* Lavori realizzati preview */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading
+            eyebrow="Portfolio"
+            title="Alcuni dei nostri lavori"
+            subtitle="Una selezione dei cantieri realizzati a Terni e provincia."
+          />
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+            {featuredProjects.map((project) => (
+              <div key={project.src} className="relative h-48 sm:h-64 rounded-xl overflow-hidden shadow-md group">
+                <Image
+                  src={project.src}
+                  alt={project.alt}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
-                  required
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Numero di telefono"
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
-                  className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
-                  required
-                />
-                <textarea
-                  name="message"
-                  placeholder="Descrivi il tuo progetto (es. tipo di lavoro, tempi)"
-                  value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
-                  className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36] text-black"
-                  rows={4}
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-[#96CA36] text-white px-6 py-3 rounded-full text-lg hover:bg-green-700 transition"
-                >
-                  Invia la tua richiesta
-                </button>
-              </form>
-            ) : (
-              <p className="text-center text-lg text-green-600">
-                Grazie! Ti contatteremo presto per discutere il tuo progetto.
-              </p>
-            )}
+              </div>
+            ))}
           </div>
-        </section>
+          <div className="text-center">
+            <CtaButton href="/projects" variant="outline">
+              Vedi tutti i lavori
+            </CtaButton>
+          </div>
+        </div>
+      </section>
 
-        <Footer />
-      </div>
+      {/* Certificazioni */}
+      <section className="py-20 bg-[#F5F5F5]">
+        <div className="max-w-6xl mx-auto px-6">
+          <SectionHeading
+            eyebrow="Garanzia di qualità"
+            title="Le nostre certificazioni"
+            subtitle="Operiamo nel rispetto delle normative del settore edile, a tutela dei nostri clienti e delle nostre squadre."
+          />
+          <CertificationsSlider />
+        </div>
+      </section>
+
+      {/* Testimonianze */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <SectionHeading
+            eyebrow="Parola ai clienti"
+            title="Cosa dicono di noi"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial) => (
+              <div key={testimonial.name} className="bg-[#F5F5F5] rounded-xl p-8 shadow-md">
+                <div className="w-12 h-12 rounded-full bg-brand-500 text-ink-700 font-bold flex items-center justify-center mb-4">
+                  {testimonial.name.charAt(0)}
+                </div>
+                <p className="text-ink-500 italic mb-4">&ldquo;{testimonial.text}&rdquo;</p>
+                <p className="font-bold text-ink-600">
+                  {testimonial.name} <span className="font-normal text-ink-400">— {testimonial.location}</span>
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact form */}
+      <section id="contact-form" className="py-20 px-6 bg-[#F5F5F5]">
+        <div className="max-w-3xl mx-auto bg-white shadow-card rounded-2xl p-8 sm:p-12">
+          <ContactForm title="Contattaci ora per un preventivo gratuito" />
+        </div>
+      </section>
     </>
   );
 }
+

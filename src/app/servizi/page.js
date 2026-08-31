@@ -1,209 +1,123 @@
-"use client";
-import Navbar from "../navbar";
 import Image from "next/image";
-import Footer from "../footer";
-import { useState } from "react";
+import ContactForm from "@/components/ContactForm";
+import SectionHeading from "@/components/SectionHeading";
+import ServiceIcon from "@/components/ServiceIcon";
+import CtaButton from "@/components/CtaButton";
+import { services } from "@/lib/site-data";
+
+export const metadata = {
+  title: "Servizi",
+  description:
+    "Opere murarie, rifacimento tetti, pavimenti e rivestimenti, cartongesso, impermeabilizzazione e impiantistica: i servizi di DMR Costruzioni a Terni.",
+  alternates: { canonical: "/servizi" },
+};
+
+const process = [
+  {
+    step: "1",
+    title: "Sopralluogo e preventivo",
+    text: "Valutiamo il cantiere e le tue esigenze, per un preventivo chiaro e senza sorprese.",
+  },
+  {
+    step: "2",
+    title: "Pianificazione",
+    text: "Definiamo tempi, materiali e fasi di lavoro insieme a te, prima di iniziare i lavori.",
+  },
+  {
+    step: "3",
+    title: "Realizzazione e consegna",
+    text: "Eseguiamo i lavori con squadre specializzate, garantendo qualità e rispetto dei tempi concordati.",
+  },
+];
 
 export default function Servizi() {
-  const services = [
-    {
-      title: "Costruzioni",
-      description:
-        "Realizziamo edifici residenziali, commerciali e industriali con materiali di alta qualità e tecnologie all'avanguardia.",
-      image: "/services/construction.jpg",
-      icon: "/icons/build.svg",
-    },
-    {
-      title: "Ristrutturazioni",
-      description:
-        "Rinnoviamo e trasformiamo spazi per renderli moderni, funzionali e accoglienti, rispettando le tue esigenze specifiche.",
-      image: "/services/renovation.jpg",
-      icon: "/icons/renovation.svg",
-    },
-    {
-      title: "Sostenibilità",
-      description:
-        "Progettiamo costruzioni responsabili e rispettose dell'ambiente, garantendo un futuro migliore.",
-      image: "/services/sustainability.jpg",
-      icon: "/icons/sustainability.svg",
-    },
-  ];
-
-  const testimonials = [
-    {
-      name: "Giovanni Rossi",
-      feedback:
-        "Grazie a DMR Costruzioni, il nostro progetto è diventato realtà. Professionalità impeccabile!",
-      image: "/testimonials/testimonial1.jpg",
-    },
-    {
-      name: "Maria Bianchi",
-      feedback: "Ristrutturazione perfetta! Non potevo chiedere di meglio.",
-      image: "/testimonials/testimonial2.jpg",
-    },
-    {
-      name: "Luca Verdi",
-      feedback:
-        "Servizio eccellente, sempre disponibili e precisi. Altamente consigliati!",
-      image: "/testimonials/testimonial3.jpg",
-    },
-  ];
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-
-      <header className="relative bg-[url('/hero-services.jpg')] bg-cover bg-center text-white min-h-[50vh] flex items-center justify-center">
-        <div className="absolute inset-0 bg-black/60"></div>
-        <div className="relative z-10 text-center px-8">
-          <h1 className="text-4xl sm:text-6xl font-bold">I Nostri Servizi</h1>
-          <p className="text-lg sm:text-2xl mt-4">
-            Professionalità, innovazione e attenzione ai dettagli per ogni
-            progetto.
+    <div>
+      <header className="relative bg-[url('/immagini/gru.jpg')] bg-cover bg-center text-white min-h-[45vh] flex items-center justify-center">
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="relative z-10 text-center px-6">
+          <h1 className="text-4xl sm:text-6xl font-extrabold">I Nostri Servizi</h1>
+          <p className="text-lg sm:text-2xl mt-4 max-w-2xl mx-auto text-white/90">
+            Professionalità, cura del dettaglio e squadre specializzate per
+            ogni tipo di lavorazione edile.
           </p>
         </div>
       </header>
 
-      <section className="py-16 px-8 bg-white">
-        <h2 className="text-3xl font-bold text-[#3B383F] mb-8 text-center">
-          Scopri cosa possiamo fare per te
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto space-y-16">
           {services.map((service, index) => (
             <div
-              key={index}
-              className="group bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition"
+              key={service.slug}
+              id={service.slug}
+              className={`grid md:grid-cols-2 gap-10 items-center scroll-mt-24 ${
+                index % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
+              }`}
             >
-              <div className="relative w-full h-56">
+              <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden shadow-card">
                 <Image
-                  src={service.image}
+                  src={`/immagini/${service.folder}/1.jpg`}
                   alt={service.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform"
+                  className="object-cover"
                 />
               </div>
-              <div className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <Image
-                    src={service.icon}
-                    alt={service.title + " icon"}
-                    width={40}
-                    height={40}
-                  />
-                  <h3 className="text-xl font-bold text-[#3B383F]">
-                    {service.title}
-                  </h3>
+              <div>
+                <div className="w-14 h-14 rounded-full bg-brand-500/10 text-brand-600 flex items-center justify-center mb-5">
+                  <ServiceIcon slug={service.slug} className="w-7 h-7" />
                 </div>
-                <p className="text-sm text-[#3B383F]">{service.description}</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-ink-600 mb-4">
+                  {service.title}
+                </h2>
+                <p className="text-ink-400 mb-6">{service.description}</p>
+                <ul className="space-y-2 mb-6">
+                  {service.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-3 text-ink-500">
+                      <span className="mt-1 w-2 h-2 rounded-full bg-brand-500 shrink-0" />
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+                <CtaButton href="/projects" variant="outline">
+                  Vedi i lavori realizzati
+                </CtaButton>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="py-16 px-8 bg-[#F5F5F5]">
-        <h2 className="text-3xl font-bold text-[#3B383F] mb-8 text-center">
-          Il nostro processo
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-[#96CA36] text-white text-2xl font-bold">
-              1
-            </div>
-            <h3 className="text-lg font-bold text-[#3B383F]">Consulenza</h3>
-            <p className="text-sm text-[#3B383F] mt-2">
-              Analizziamo le tue esigenze e definiamo i tuoi obiettivi,
-              garantendo un approccio personalizzato e professionale.
-            </p>
-          </div>
-          <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-[#96CA36] text-white text-2xl font-bold">
-              2
-            </div>
-            <h3 className="text-lg font-bold text-[#3B383F]">Progettazione</h3>
-            <p className="text-sm text-[#3B383F] mt-2">
-              Creiamo progetti personalizzati, utilizzando tecnologie moderne e
-              materiali di alta qualità.
-            </p>
-          </div>
-          <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-[#96CA36] text-white text-2xl font-bold">
-              3
-            </div>
-            <h3 className="text-lg font-bold text-[#3B383F]">Realizzazione</h3>
-            <p className="text-sm text-[#3B383F] mt-2">
-              Diamo vita ai tuoi progetti con precisione e dedizione, garantendo
-              tempi rapidi e qualità eccellente.
-            </p>
+      <section className="py-20 px-6 bg-[#F5F5F5]">
+        <div className="max-w-6xl mx-auto">
+          <SectionHeading
+            eyebrow="Come lavoriamo"
+            title="Il nostro processo"
+            subtitle="Un percorso semplice e trasparente, dal primo contatto alla consegna del cantiere."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
+            {process.map((item) => (
+              <div key={item.step} className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-brand-500 text-ink-700 text-2xl font-bold">
+                  {item.step}
+                </div>
+                <h3 className="text-lg font-bold text-ink-600">{item.title}</h3>
+                <p className="text-sm text-ink-400 mt-2">{item.text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="py-16 px-8 bg-white">
-        <h2 className="text-3xl font-bold text-[#3B383F] mb-8 text-center">
-          Testimonianze dei nostri clienti
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-[#F5F5F5] shadow-md rounded-lg p-6">
-              <Image
-                src={testimonial.image}
-                alt={testimonial.name}
-                width={80}
-                height={80}
-                className="rounded-full mx-auto mb-4"
-              />
-              <p className="text-sm italic text-[#3B383F]">
-                {testimonial.feedback}
-              </p>
-              <h4 className="text-lg font-bold text-[#96CA36] mt-4 text-center">
-                - {testimonial.name}
-              </h4>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="py-16 px-8 bg-white">
-        <h2 className="text-3xl font-bold text-[#3B383F] mb-8 text-center">
-          Richiedi maggiori informazioni
-        </h2>
-        <div className="max-w-4xl mx-auto bg-[#F5F5F5] shadow-md rounded-lg p-8">
-          <p className="text-lg text-[#3B383F] mb-6">
-            Sei interessato ai nostri servizi? Compila il modulo qui sotto e il
-            nostro team ti contatterà per offrirti una consulenza gratuita e
-            senza impegno.
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-3xl mx-auto bg-[#F5F5F5] shadow-card rounded-2xl p-8 sm:p-12">
+          <p className="text-lg text-ink-500 mb-6 text-center">
+            Sei interessato a uno dei nostri servizi? Compila il modulo:
+            ti ricontatteremo per una consulenza gratuita e senza impegno.
           </p>
-          <form className="grid gap-4">
-            <input
-              type="text"
-              placeholder="Nome completo"
-              className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36]"
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36]"
-              required
-            />
-            <textarea
-              placeholder="Descrivi il tuo progetto o le tue esigenze"
-              className="p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#96CA36]"
-              rows={4}
-              required
-            />
-            <button
-              type="submit"
-              className="bg-[#96CA36] text-white px-6 py-3 rounded-full text-lg hover:bg-green-700 transition"
-            >
-              Invia richiesta
-            </button>
-          </form>
+          <ContactForm title="" />
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }
+

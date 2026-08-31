@@ -1,8 +1,9 @@
 import localFont from "next/font/local";
 import "./globals.css";
-
-// Importa la favicon
-import favicon from "../../public/immagini/favicon-32x32.png";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { company, siteUrl } from "@/lib/site-data";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,39 +17,91 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title:
-    "DMR Costruzioni - Impresa Edile a Terni | Costruzioni e Ristrutturazioni",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "DMR Costruzioni - Impresa Edile a Terni",
+    template: "%s | DMR Costruzioni",
+  },
   description:
-    "DMR Costruzioni è un'impresa edile con sede a Terni, specializzata in costruzioni, ristrutturazioni e opere in cartongesso. Scopri i nostri servizi di alta qualità.",
+    "DMR Costruzioni è un'impresa edile con sede a Terni, specializzata in costruzioni, ristrutturazioni, rifacimento tetti, cartongesso e impiantistica.",
+  keywords: [
+    "impresa edile Terni",
+    "costruzioni Terni",
+    "ristrutturazioni Terni",
+    "opere cartongesso Terni",
+    "rifacimento tetti Terni",
+    "edilizia Terni",
+    "DMR Costruzioni",
+  ],
+  authors: [{ name: "DMR Costruzioni" }],
+  robots: { index: true, follow: true },
+  icons: {
+    icon: "/immagini/favicon-32x32.png",
+  },
+  openGraph: {
+    type: "website",
+    locale: "it_IT",
+    url: siteUrl,
+    siteName: "DMR Costruzioni",
+    title: "DMR Costruzioni - Impresa Edile a Terni",
+    description:
+      "Costruzioni, ristrutturazioni, rifacimento tetti, cartongesso e impiantistica a Terni e provincia.",
+    images: ["/immagini/s3.jpg"],
+  },
+  other: {
+    "geo.region": "IT-TR",
+    "geo.placename": "Terni",
+    "geo.position": `${company.lat};${company.lng}`,
+    ICBM: `${company.lat}, ${company.lng}`,
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#96ca36",
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "GeneralContractor",
+  name: company.name,
+  image: `${siteUrl}/immagini/s3.jpg`,
+  telephone: company.phoneDisplay,
+  email: company.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: company.address,
+    addressLocality: company.city,
+    addressRegion: company.province,
+    postalCode: company.cap,
+    addressCountry: "IT",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: company.lat,
+    longitude: company.lng,
+  },
+  url: siteUrl,
+  areaServed: "Terni e provincia",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="it">
-      <head>
-        {/* Metadati SEO principali */}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow" />
-        <meta name="author" content="DMR Costruzioni" />
-        <meta
-          name="keywords"
-          content="impresa edile Terni, costruzioni Terni, ristrutturazioni Terni, opere cartongesso Terni, edilizia Terni, DMR Costruzioni"
-        />
-
-        {/* Importa la favicon */}
-        <link rel="icon" href={favicon.src} />
-
-        {/* Informazioni aggiuntive */}
-        <meta name="geo.region" content="IT-TR" />
-        <meta name="geo.placename" content="Terni" />
-        <meta name="geo.position" content="42.563616;12.643246" />
-        <meta name="ICBM" content="42.563616, 12.643246" />
-      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <Navbar />
+        <main className="flex-1 pt-[72px]">{children}</main>
+        <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );
 }
+
