@@ -28,7 +28,7 @@ export const company = {
   },
 };
 
-export const siteUrl = "https://www.dmrcostruzioni.it";
+export const siteUrl = "https://www.dmrcostruzioni.casa";
 
 export const navLinks = [
   { href: "/", label: "Home" },
