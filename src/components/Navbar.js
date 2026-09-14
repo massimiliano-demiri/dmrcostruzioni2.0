@@ -32,17 +32,22 @@ export default function Navbar() {
       }`}
     >
       <div className="container-page flex justify-between items-center py-3">
-        <Link href="/" className="flex items-center gap-3 shrink-0">
+        <Link href="/" className="group flex items-center gap-3 shrink-0">
           <Image
             src={logo}
             alt="DMR Costruzioni"
             width={48}
             height={48}
-            className="rounded-full w-12 h-12"
+            className="rounded-full w-11 h-11 sm:w-12 sm:h-12 ring-2 ring-transparent group-hover:ring-brand-500/40 transition-all"
             priority
           />
-          <span className="hidden sm:block font-extrabold text-ink-600 text-lg leading-tight">
-            DMR Costruzioni
+          <span className="flex flex-col leading-none">
+            <span className="font-extrabold text-ink-600 text-xl sm:text-2xl tracking-tight">
+              DMR<span className="text-brand-500">.</span>
+            </span>
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] text-ink-400 group-hover:text-brand-600 transition-colors">
+              Costruzioni
+            </span>
           </span>
         </Link>
 
@@ -69,7 +74,7 @@ export default function Navbar() {
             {company.phoneDisplay}
           </a>
           <Link
-            href="/contact"
+            href="/preventivo-gratuito"
             className="bg-brand-500 text-ink-700 px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-brand-600 transition-colors"
           >
             Preventivo gratuito
@@ -121,7 +126,7 @@ export default function Navbar() {
               {company.phoneDisplay}
             </a>
             <Link
-              href="/contact"
+              href="/preventivo-gratuito"
               className="bg-brand-500 text-ink-700 px-5 py-3 rounded-full text-center font-semibold"
             >
               Preventivo gratuito

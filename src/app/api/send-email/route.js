@@ -43,45 +43,95 @@ export async function POST(request) {
     return Response.json({ error: "Inserisci un indirizzo email valido." }, { status: 400 });
   }
 
-  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO_EMAIL } = process.env;
+  const {
+    RESEND_API_KEY,
+    RESEND_FROM_EMAIL,
+    SMTP_HOST,
+    SMTP_PORT,
+    SMTP_USER,
+    SMTP_PASS,
+    CONTACT_TO_EMAIL,
+  } = process.env;
 
-  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
-    console.error("Configurazione SMTP mancante: impossibile inviare l'email.");
-    return Response.json(
-      { error: "Servizio email non configurato. Contattaci telefonicamente." },
-      { status: 500 }
-    );
+  const to = CONTACT_TO_EMAIL || company.email;
+  const subject = `Nuova richiesta di preventivo da ${name}`;
+  const text = [
+    `Nome: ${name}`,
+    `Email: ${email}`,
+    `Telefono: ${phone}`,
+    "",
+    "Messaggio:",
+    message,
+  ].join("\n");
+
+  // Provider primario: Resend (https://resend.com), basta una API key nel .env.
+  if (RESEND_API_KEY) {
+    try {
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: RESEND_FROM_EMAIL || "DMR Costruzioni <onboarding@resend.dev>",
+          to,
+          reply_to: email,
+          subject,
+          text,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}));
+        console.error("Errore Resend:", errorBody);
+        return Response.json(
+          { error: "Impossibile inviare la richiesta. Riprova più tardi." },
+          { status: 502 }
+        );
+      }
+
+      return Response.json({ success: true });
+    } catch (error) {
+      console.error("Errore durante l'invio dell'email (Resend):", error);
+      return Response.json(
+        { error: "Impossibile inviare la richiesta. Riprova più tardi." },
+        { status: 500 }
+      );
+    }
   }
 
-  try {
-    const transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: Number(SMTP_PORT) || 587,
-      secure: Number(SMTP_PORT) === 465,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
-    });
+  // Fallback: SMTP tradizionale via nodemailer, se configurato.
+  if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: Number(SMTP_PORT) || 587,
+        secure: Number(SMTP_PORT) === 465,
+        auth: { user: SMTP_USER, pass: SMTP_PASS },
+      });
 
-    await transporter.sendMail({
-      from: `"Sito ${company.name}" <${SMTP_USER}>`,
-      to: CONTACT_TO_EMAIL || company.email,
-      replyTo: email,
-      subject: `Nuova richiesta di preventivo da ${name}`,
-      text: [
-        `Nome: ${name}`,
-        `Email: ${email}`,
-        `Telefono: ${phone}`,
-        "",
-        "Messaggio:",
-        message,
-      ].join("\n"),
-    });
+      await transporter.sendMail({
+        from: `"Sito ${company.name}" <${SMTP_USER}>`,
+        to,
+        replyTo: email,
+        subject,
+        text,
+      });
 
-    return Response.json({ success: true });
-  } catch (error) {
-    console.error("Errore durante l'invio dell'email:", error);
-    return Response.json(
-      { error: "Impossibile inviare la richiesta. Riprova più tardi." },
-      { status: 500 }
-    );
+      return Response.json({ success: true });
+    } catch (error) {
+      console.error("Errore durante l'invio dell'email (SMTP):", error);
+      return Response.json(
+        { error: "Impossibile inviare la richiesta. Riprova più tardi." },
+        { status: 500 }
+      );
+    }
   }
+
+  console.error("Nessun provider email configurato (RESEND_API_KEY o SMTP_*).");
+  return Response.json(
+    { error: "Servizio email non configurato. Contattaci telefonicamente." },
+    { status: 500 }
+  );
 }

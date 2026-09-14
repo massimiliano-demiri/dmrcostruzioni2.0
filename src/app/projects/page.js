@@ -49,7 +49,7 @@ export default async function ProjectsPage() {
           Raccontaci la tua idea: ti aiutiamo a trasformarla in un cantiere
           concreto, con un preventivo gratuito.
         </p>
-        <CtaButton href="/contact">Richiedi un preventivo</CtaButton>
+        <CtaButton href="/preventivo-gratuito">Richiedi un preventivo</CtaButton>
       </section>
     </div>
   );

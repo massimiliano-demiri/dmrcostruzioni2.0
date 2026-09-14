@@ -21,6 +21,11 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-bold mb-4">Link utili</h3>
           <ul className="text-sm space-y-2 text-ink-100/80">
+            <li>
+              <Link href="/preventivo-gratuito" className="text-brand-400 font-semibold hover:text-brand-300 transition-colors">
+                Preventivo gratuito
+              </Link>
+            </li>
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className="hover:text-brand-400 transition-colors">

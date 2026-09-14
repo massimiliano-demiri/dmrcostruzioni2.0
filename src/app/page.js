@@ -5,7 +5,23 @@ import SectionHeading from "@/components/SectionHeading";
 import ServiceIcon from "@/components/ServiceIcon";
 import CertificationsSlider from "@/components/CertificationsSlider";
 import ContactForm from "@/components/ContactForm";
-import { services, stats, testimonials } from "@/lib/site-data";
+import ServiceAreas from "@/components/ServiceAreas";
+import Reveal from "@/components/Reveal";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import { services, stats, testimonials, faqs } from "@/lib/site-data";
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
 
 export const metadata = {
   title: "DMR Costruzioni - Impresa Edile a Terni",
@@ -26,6 +42,10 @@ const featuredProjects = [
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Hero */}
       <header className="relative bg-[url('/immagini/s3.jpg')] bg-cover bg-center text-white min-h-[90vh] flex items-center justify-center">
         <div className="absolute inset-0 bg-black/65" />
@@ -43,7 +63,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <CtaButton href="/servizi">Scopri i nostri servizi</CtaButton>
-            <CtaButton href="/contact" variant="outline-light">
+            <CtaButton href="/preventivo-gratuito" variant="outline-light">
               Richiedi un preventivo
             </CtaButton>
           </div>
@@ -53,13 +73,13 @@ export default function Home() {
       {/* Stats */}
       <section className="py-16 px-6 bg-white border-b border-gray-100">
         <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-10 text-center">
-          {stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center">
+          {stats.map((stat, index) => (
+            <Reveal key={stat.label} delay={index * 100} className="flex flex-col items-center">
               <span className="text-5xl sm:text-6xl font-extrabold text-brand-600">
-                {stat.value}
+                <AnimatedCounter value={stat.value} />
               </span>
               <span className="text-lg text-ink-500 mt-2">{stat.label}</span>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -73,31 +93,32 @@ export default function Home() {
             subtitle="Un'unica impresa per ogni fase del cantiere: dalle opere murarie alle finiture, con squadre specializzate per ogni lavorazione."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => (
-              <Link
-                key={service.slug}
-                href="/servizi"
-                className="group bg-white rounded-xl shadow-md hover:shadow-card transition-shadow overflow-hidden flex flex-col"
-              >
-                <div className="relative h-48">
-                  <Image
-                    src={`/immagini/${service.folder}/1.jpg`}
-                    alt={service.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="w-12 h-12 rounded-full bg-brand-500/10 text-brand-600 flex items-center justify-center mb-4">
-                    <ServiceIcon slug={service.slug} />
+            {services.map((service, index) => (
+              <Reveal key={service.slug} delay={(index % 3) * 100}>
+                <Link
+                  href="/servizi"
+                  className="group bg-white rounded-xl shadow-md hover:shadow-card transition-shadow overflow-hidden flex flex-col h-full"
+                >
+                  <div className="relative h-48">
+                    <Image
+                      src={`/immagini/${service.folder}/1.jpg`}
+                      alt={service.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
-                  <h3 className="text-xl font-bold text-ink-600 mb-2">{service.title}</h3>
-                  <p className="text-sm text-ink-400 flex-1">{service.short}</p>
-                  <span className="mt-4 text-brand-600 font-semibold text-sm">
-                    Scopri di più &rarr;
-                  </span>
-                </div>
-              </Link>
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="w-12 h-12 rounded-full bg-brand-500/10 text-brand-600 flex items-center justify-center mb-4">
+                      <ServiceIcon slug={service.slug} />
+                    </div>
+                    <h3 className="text-xl font-bold text-ink-600 mb-2">{service.title}</h3>
+                    <p className="text-sm text-ink-400 flex-1">{service.short}</p>
+                    <span className="mt-4 text-brand-600 font-semibold text-sm">
+                      Scopri di più &rarr;
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -112,15 +133,15 @@ export default function Home() {
             subtitle="Una selezione dei cantieri realizzati a Terni e provincia."
           />
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-            {featuredProjects.map((project) => (
-              <div key={project.src} className="relative h-48 sm:h-64 rounded-xl overflow-hidden shadow-md group">
+            {featuredProjects.map((project, index) => (
+              <Reveal key={project.src} delay={(index % 3) * 100} className="relative h-48 sm:h-64 rounded-xl overflow-hidden shadow-md group">
                 <Image
                   src={project.src}
                   alt={project.alt}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-              </div>
+              </Reveal>
             ))}
           </div>
           <div className="text-center">
@@ -151,8 +172,8 @@ export default function Home() {
             title="Cosa dicono di noi"
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.name} className="bg-[#F5F5F5] rounded-xl p-8 shadow-md">
+            {testimonials.map((testimonial, index) => (
+              <Reveal key={testimonial.name} delay={index * 100} className="bg-[#F5F5F5] rounded-xl p-8 shadow-md">
                 <div className="w-12 h-12 rounded-full bg-brand-500 text-ink-700 font-bold flex items-center justify-center mb-4">
                   {testimonial.name.charAt(0)}
                 </div>
@@ -160,7 +181,34 @@ export default function Home() {
                 <p className="font-bold text-ink-600">
                   {testimonial.name} <span className="font-normal text-ink-400">— {testimonial.location}</span>
                 </p>
-              </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <ServiceAreas />
+
+      {/* FAQ - intercetta le ricerche informative su impresa edile a Terni */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <SectionHeading
+            eyebrow="Domande frequenti"
+            title="Impresa edile a Terni: le domande più comuni"
+          />
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <Reveal key={faq.question} delay={index * 80}>
+                <details className="group bg-[#F5F5F5] rounded-xl p-6 open:shadow-md">
+                  <summary className="font-bold text-ink-600 cursor-pointer list-none flex justify-between items-center gap-4">
+                    {faq.question}
+                    <span className="text-brand-600 text-xl group-open:rotate-45 transition-transform shrink-0">
+                      +
+                    </span>
+                  </summary>
+                  <p className="text-ink-400 mt-3">{faq.answer}</p>
+                </details>
+              </Reveal>
             ))}
           </div>
         </div>

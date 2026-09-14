@@ -108,10 +108,10 @@ export default function AboutPage() {
           Vuoi conoscerci meglio?
         </h2>
         <p className="text-ink-400 mb-8 max-w-xl mx-auto">
-          Contattaci per raccontarci il tuo progetto: siamo pronti ad
-          ascoltarti.
+          Raccontaci il tuo progetto: sopralluogo e preventivo sono
+          gratuiti e senza impegno.
         </p>
-        <CtaButton href="/contact">Contattaci</CtaButton>
+        <CtaButton href="/preventivo-gratuito">Richiedi un preventivo</CtaButton>
       </section>
     </div>
   );

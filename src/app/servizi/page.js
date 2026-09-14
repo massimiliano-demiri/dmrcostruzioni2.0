@@ -3,6 +3,7 @@ import ContactForm from "@/components/ContactForm";
 import SectionHeading from "@/components/SectionHeading";
 import ServiceIcon from "@/components/ServiceIcon";
 import CtaButton from "@/components/CtaButton";
+import Reveal from "@/components/Reveal";
 import { services } from "@/lib/site-data";
 
 export const metadata = {
@@ -62,7 +63,7 @@ export default function Servizi() {
                   className="object-cover"
                 />
               </div>
-              <div>
+              <Reveal delay={100}>
                 <div className="w-14 h-14 rounded-full bg-brand-500/10 text-brand-600 flex items-center justify-center mb-5">
                   <ServiceIcon slug={service.slug} className="w-7 h-7" />
                 </div>
@@ -81,7 +82,7 @@ export default function Servizi() {
                 <CtaButton href="/projects" variant="outline">
                   Vedi i lavori realizzati
                 </CtaButton>
-              </div>
+              </Reveal>
             </div>
           ))}
         </div>

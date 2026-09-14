@@ -3,7 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { company, siteUrl } from "@/lib/site-data";
+import MobileCtaBar from "@/components/MobileCtaBar";
+import { company, siteUrl, serviceAreas } from "@/lib/site-data";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,11 +27,22 @@ export const metadata = {
     "DMR Costruzioni è un'impresa edile con sede a Terni, specializzata in costruzioni, ristrutturazioni, rifacimento tetti, cartongesso e impiantistica.",
   keywords: [
     "impresa edile Terni",
+    "impresa edile Terni preventivo gratuito",
+    "ditta edile Terni",
+    "impresa di costruzioni Terni",
+    "muratori Terni",
     "costruzioni Terni",
     "ristrutturazioni Terni",
+    "ristrutturazione appartamento Terni",
     "opere cartongesso Terni",
     "rifacimento tetti Terni",
+    "impermeabilizzazione tetti Terni",
+    "pavimenti e rivestimenti Terni",
+    "impiantistica edile Terni",
     "edilizia Terni",
+    "impresa edile Umbria",
+    "impresa edile Narni",
+    "impresa edile Amelia",
     "DMR Costruzioni",
   ],
   authors: [{ name: "DMR Costruzioni" }],
@@ -66,9 +78,12 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "GeneralContractor",
   name: company.name,
+  description:
+    "Impresa edile a Terni specializzata in costruzioni, ristrutturazioni, rifacimento tetti, cartongesso, pavimenti e impiantistica.",
   image: `${siteUrl}/immagini/s3.jpg`,
   telephone: company.phoneDisplay,
   email: company.email,
+  priceRange: "€€",
   address: {
     "@type": "PostalAddress",
     streetAddress: company.address,
@@ -83,7 +98,11 @@ const jsonLd = {
     longitude: company.lng,
   },
   url: siteUrl,
-  areaServed: "Terni e provincia",
+  areaServed: serviceAreas.map((town) => ({
+    "@type": "City",
+    name: town,
+  })),
+  sameAs: Object.values(company.social).filter((link) => link && link !== "#"),
 };
 
 export default function RootLayout({ children }) {
@@ -99,7 +118,10 @@ export default function RootLayout({ children }) {
         <Navbar />
         <main className="flex-1 pt-[72px]">{children}</main>
         <Footer />
+        {/* Riserva spazio per la barra CTA fissa su mobile */}
+        <div className="h-16 md:hidden" />
         <WhatsAppButton />
+        <MobileCtaBar />
       </body>
     </html>
   );

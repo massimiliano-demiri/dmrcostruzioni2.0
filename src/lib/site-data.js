@@ -185,3 +185,41 @@ export const certifications = [
   "/immagini/4.png",
   "/immagini/5.png",
 ];
+
+// Comuni serviti: usati sia nella sezione "Zona operativa" sia nei dati
+// strutturati SEO (areaServed) in layout.js.
+export const serviceAreas = [
+  "Terni",
+  "Narni",
+  "Amelia",
+  "San Gemini",
+  "Acquasparta",
+  "Stroncone",
+  "Orvieto",
+  "Spoleto",
+];
+
+// Domande frequenti mostrate in home e usate per il markup FAQPage:
+// intercettano le ricerche informative su "impresa edile Terni".
+export const faqs = [
+  {
+    question: "Quanto costa una ristrutturazione a Terni?",
+    answer:
+      "Il costo dipende da metratura, stato dell'immobile e finiture scelte. Dopo un sopralluogo gratuito ti forniamo un preventivo dettagliato e senza sorprese, in genere entro pochi giorni.",
+  },
+  {
+    question: "In quanto tempo potete iniziare i lavori?",
+    answer:
+      "Nella maggior parte dei casi organizziamo il sopralluogo entro pochi giorni dalla richiesta e concordiamo insieme la data di inizio cantiere in base alla disponibilità delle squadre.",
+  },
+  {
+    question: "Lavorate solo a Terni o anche nei comuni vicini?",
+    answer:
+      "Operiamo a Terni città e in tutta la provincia: Narni, Amelia, San Gemini, Acquasparta, Stroncone, Orvieto, Spoleto e zone limitrofe.",
+  },
+  {
+    question: "Il preventivo è davvero gratuito e senza impegno?",
+    answer:
+      "Sì: sopralluogo e preventivo sono sempre gratuiti e senza alcun impegno. Ti richiamiamo per capire l'esigenza e poi ti inviamo un preventivo scritto e dettagliato.",
+  },
+];
