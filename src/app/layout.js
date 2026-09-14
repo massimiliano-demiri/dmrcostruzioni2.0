@@ -123,6 +123,7 @@ export default function RootLayout({ children }) {
         <div className="h-16 md:hidden" />
         <WhatsAppButton />
         <MobileCtaBar />
+        <Analytics />
       </body>
     </html>
   );
