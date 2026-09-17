@@ -14,7 +14,7 @@ const client = isContentfulConfigured
   : null;
 
 /**
- * Recupera i progetti pubblicati dal content type "progetto".
+ * Recupera i progetti pubblicati dal content type "dmrcostruzioni".
  * Ritorna un array (eventualmente vuoto) e non lancia mai eccezioni,
  * così un errore di configurazione non blocca il rendering della pagina.
  */
@@ -23,7 +23,7 @@ export async function getContentfulProjects() {
 
   try {
     const entries = await client.getEntries({
-      content_type: "progetto",
+      content_type: "dmrcostruzioni",
       order: "-fields.data,-sys.createdAt",
       limit: 200,
     });

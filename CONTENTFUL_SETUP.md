@@ -16,8 +16,8 @@ webhook al punto 6.
 
 Nel menu **Content model > Add content type**, crea un tipo con:
 
-- **Name**: `Progetto`
-- **API Identifier**: `progetto` (importante: deve essere esattamente questo)
+- **Name**: a piacere (es. `Progetto` o `Dmrcostruzioni`)
+- **API Identifier**: `dmrcostruzioni` (importante: deve essere esattamente questo)
 
 Aggiungi questi campi (Field ID esattamente come indicato):
 
@@ -69,7 +69,7 @@ impostazioni del progetto ("Environment Variables").
 
 ## 5. Come caricare una nuova foto/progetto
 
-1. Vai su **Content > Add entry > Progetto**.
+1. Vai su **Content > Add entry** e scegli il content type creato al punto 2.
 2. Compila Titolo, Categoria (obbligatoria) e, se vuoi, Descrizione e Luogo.
 3. Nel campo **Immagini**, trascina una o più foto (puoi selezionarne
    diverse insieme).
@@ -88,7 +88,7 @@ dopo la pubblicazione:
    `CONTENTFUL_REVALIDATE_SECRET` nelle variabili d'ambiente.
 2. In Contentful vai su **Settings > Webhooks > Add Webhook**.
 3. URL: `https://tuodominio.it/api/revalidate?secret=IL_TUO_SEGRETO`
-4. Metodo: `POST`, Trigger: "Publish" dell'entry `progetto`.
+4. Metodo: `POST`, Trigger: "Publish" dell'entry `dmrcostruzioni`.
 
 ## 7. Il sito funziona anche senza Contentful
 
